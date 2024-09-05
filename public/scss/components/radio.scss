@@ -1,0 +1,17 @@
+.radio {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  input[type="radio"] {
+    margin-right: 0.2rem;
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  label {
+    font-size: 1.5rem;
+  }
+}

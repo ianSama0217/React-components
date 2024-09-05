@@ -1,20 +1,27 @@
+import { useState } from "react";
 import "../public/scss/index.scss";
 
-import { useState } from "react";
-import Switch from "./components/switch/Switch";
+import Radio from "./components/radio/Radio";
 
 function App() {
-  const [isDisplay, setIsDisplay] = useState(false);
-  const handleChange = () => {
-    setIsDisplay(!isDisplay);
-    console.log("isDisplay = " + isDisplay);
+  const [value, setValue] = useState("A");
+  const [labelText, setLabelText] = useState("選項1");
+  const [isChecked, setIsChecked] = useState(false);
+  const handleValue = () => {
+    console.log("value = " + value);
+    console.log("label = " + labelText);
+    setIsChecked(!isChecked);
   };
 
   return (
     <>
       <h1>App Home</h1>
-      <Switch isChecked={isDisplay} handleChange={handleChange} />
-      <Switch type="square" isChecked={isDisplay} handleChange={handleChange} />
+      <Radio
+        value={value}
+        labelText={labelText}
+        isChecked={isChecked}
+        handleChange={handleValue}
+      />
     </>
   );
 }
