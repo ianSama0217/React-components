@@ -4,24 +4,64 @@ import "../public/scss/index.scss";
 import Radio from "./components/radio/Radio";
 
 function App() {
-  const [value, setValue] = useState("A");
-  const [labelText, setLabelText] = useState("選項1");
-  const [isChecked, setIsChecked] = useState(false);
-  const handleValue = () => {
-    console.log("value = " + value);
-    console.log("label = " + labelText);
-    setIsChecked(!isChecked);
+  const [radioValueList, setRadioValueList] = useState([
+    {
+      name: "test",
+      value: "1",
+      labelText: "選項A",
+      isChecked: false,
+      labelFor: "A",
+    },
+    {
+      name: "test",
+      value: "2",
+      labelText: "選項B",
+      isChecked: false,
+      labelFor: "B",
+    },
+    {
+      name: "test",
+      value: "3",
+      labelText: "選項C",
+      isChecked: false,
+      labelFor: "C",
+    },
+    {
+      name: "test",
+      value: "4",
+      labelText: "選項D",
+      isChecked: false,
+      labelFor: "D",
+    },
+  ]);
+
+  const handleRadioList = (index: number) => {
+    console.log(index);
+    const updatedRadioList = radioValueList.map((radio, i) => ({
+      ...radio,
+      isChecked: i === index,
+    }));
+    setRadioValueList(updatedRadioList);
+    console.log(radioValueList);
   };
 
   return (
     <>
       <h1>App Home</h1>
-      <Radio
-        value={value}
-        labelText={labelText}
-        isChecked={isChecked}
-        handleChange={handleValue}
-      />
+
+      {radioValueList.map((radio, index) => (
+        <Radio
+          key={index}
+          name={radio.name}
+          value={radio.value}
+          labelText={radio.labelText}
+          isChecked={radio.isChecked}
+          handleChange={() => {
+            handleRadioList(index);
+          }}
+          labelFor={radio.labelFor}
+        />
+      ))}
     </>
   );
 }
