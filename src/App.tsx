@@ -1,33 +1,29 @@
 import { useState } from "react";
 import "../public/scss/index.scss";
 
-import Radio from "./components/radio/Radio";
+import Checkbox from "./components/checkbox/Checkbox";
 
 function App() {
-  const [radioValueList, setRadioValueList] = useState([
+  const [valueList, setValueList] = useState([
     {
-      name: "test",
       value: "1",
       labelText: "選項A",
       isChecked: false,
       labelFor: "A",
     },
     {
-      name: "test",
       value: "2",
       labelText: "選項B",
       isChecked: false,
       labelFor: "B",
     },
     {
-      name: "test",
       value: "3",
       labelText: "選項C",
       isChecked: false,
       labelFor: "C",
     },
     {
-      name: "test",
       value: "4",
       labelText: "選項D",
       isChecked: false,
@@ -35,33 +31,57 @@ function App() {
     },
   ]);
 
-  const handleRadioList = (index: number) => {
-    console.log(index);
-    const updatedRadioList = radioValueList.map((radio, i) => ({
-      ...radio,
-      isChecked: i === index,
-    }));
-    setRadioValueList(updatedRadioList);
-    console.log(radioValueList);
+  const [answer, setAnswer] = useState<string[]>([]);
+
+  const handleCheckboxList = (index: number) => {
+    const updatedCheckboxList = valueList.map((checkbox, i) => {
+      if (i === index) {
+        return { ...checkbox, isChecked: !checkbox.isChecked };
+      }
+      return { ...checkbox };
+    });
+
+    setValueList(updatedCheckboxList);
+
+    const updateAnswer = updatedCheckboxList
+      .filter((Checkbox) => Checkbox.isChecked)
+      .map((checkbox) => checkbox.value);
+
+    setAnswer(updateAnswer);
+  };
+
+  // 優化handleChange
+  const handleCheckboxListOpti = (index: number) => {
+    setValueList((preList) => {
+      const updateList = preList.map((checkbox, i) =>
+        i === index ? { ...checkbox, isChecked: !checkbox.isChecked } : checkbox
+      );
+
+      const updatedAnswer = updateList
+        .filter((checkbox) => checkbox.isChecked)
+        .map((checkbox) => checkbox.value);
+
+      setAnswer(updatedAnswer);
+
+      return updateList;
+    });
   };
 
   return (
     <>
       <h1>App Home</h1>
 
-      {radioValueList.map((radio, index) => (
-        <Radio
+      {valueList.map((checkbox, index) => (
+        <Checkbox
           key={index}
-          name={radio.name}
-          value={radio.value}
-          labelText={radio.labelText}
-          isChecked={radio.isChecked}
-          handleChange={() => {
-            handleRadioList(index);
-          }}
-          labelFor={radio.labelFor}
+          value={checkbox.value}
+          labelText={checkbox.labelText}
+          labelFor={checkbox.labelFor}
+          isChecked={checkbox.isChecked}
+          handleChange={() => handleCheckboxList(index)}
         />
       ))}
+      <h3>checkbox checked value:{answer.join(", ")}</h3>
     </>
   );
 }
