@@ -1,0 +1,27 @@
+.input {
+  label {
+    font-size: 1.5rem;
+  }
+  input {
+    min-height: 1.5rem;
+    min-width: 10vw;
+    font-size: 1.15rem;
+    padding: 0.2rem;
+    border-radius: 8px;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+
+  input {
+    margin-left: 0.2rem;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}

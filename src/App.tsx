@@ -1,87 +1,65 @@
 import { useState } from "react";
 import "../public/scss/index.scss";
 
-import Checkbox from "./components/checkbox/Checkbox";
+import Input from "./components/input/input";
 
 function App() {
-  const [valueList, setValueList] = useState([
-    {
-      value: "1",
-      labelText: "選項A",
-      isChecked: false,
-      labelFor: "A",
-    },
-    {
-      value: "2",
-      labelText: "選項B",
-      isChecked: false,
-      labelFor: "B",
-    },
-    {
-      value: "3",
-      labelText: "選項C",
-      isChecked: false,
-      labelFor: "C",
-    },
-    {
-      value: "4",
-      labelText: "選項D",
-      isChecked: false,
-      labelFor: "D",
-    },
-  ]);
+  const [text, setText] = useState("");
+  const [num, setNum] = useState("");
+  const [date, setDate] = useState("");
+  const [color, setColor] = useState("");
 
-  const [answer, setAnswer] = useState<string[]>([]);
-
-  const handleCheckboxList = (index: number) => {
-    const updatedCheckboxList = valueList.map((checkbox, i) => {
-      if (i === index) {
-        return { ...checkbox, isChecked: !checkbox.isChecked };
-      }
-      return { ...checkbox };
-    });
-
-    setValueList(updatedCheckboxList);
-
-    const updateAnswer = updatedCheckboxList
-      .filter((Checkbox) => Checkbox.isChecked)
-      .map((checkbox) => checkbox.value);
-
-    setAnswer(updateAnswer);
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
   };
 
-  // 優化handleChange
-  const handleCheckboxListOpti = (index: number) => {
-    setValueList((preList) => {
-      const updateList = preList.map((checkbox, i) =>
-        i === index ? { ...checkbox, isChecked: !checkbox.isChecked } : checkbox
-      );
+  const handleNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNum(e.target.value);
+  };
 
-      const updatedAnswer = updateList
-        .filter((checkbox) => checkbox.isChecked)
-        .map((checkbox) => checkbox.value);
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(e.target.value);
+  };
 
-      setAnswer(updatedAnswer);
-
-      return updateList;
-    });
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setColor(e.target.value);
   };
 
   return (
     <>
       <h1>App Home</h1>
 
-      {valueList.map((checkbox, index) => (
-        <Checkbox
-          key={index}
-          value={checkbox.value}
-          labelText={checkbox.labelText}
-          labelFor={checkbox.labelFor}
-          isChecked={checkbox.isChecked}
-          handleChange={() => handleCheckboxList(index)}
-        />
-      ))}
-      <h3>checkbox checked value:{answer.join(", ")}</h3>
+      <Input
+        arrange="row"
+        value={text}
+        labelText="測試001"
+        handleChange={handleTextChange}
+      />
+      <p>{text}</p>
+
+      <Input
+        value={num}
+        labelText="測試002"
+        type="number"
+        handleChange={handleNumChange}
+      />
+      <p>{num}</p>
+
+      <Input
+        value={date}
+        labelText="測試003"
+        type="date"
+        handleChange={handleDateChange}
+      />
+      <p>{date}</p>
+
+      <Input
+        value={color}
+        labelText="測試004"
+        type="color"
+        handleChange={handleColorChange}
+      />
+      <p>{color}</p>
     </>
   );
 }
