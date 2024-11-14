@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-const buttonColors: any = {
+const buttonColors: Record<string, string> = {
   primary: "rgb(108, 115, 252)",
   secondary: "rgb(100, 100, 100)",
   success: "rgb(40, 167, 69)",
@@ -11,6 +10,8 @@ const buttonColors: any = {
 
 export const BaseButton = styled.button<{ $variant?: string }>`
   border: none;
+  display: flex;
+  align-items: center;
   border-radius: 4px;
   padding: 0.25rem 0.5rem;
   min-height: 1.75rem;
@@ -58,4 +59,10 @@ export const BaseButton = styled.button<{ $variant?: string }>`
   &:focus {
     outline: 2px solid #80bdff; /* 聚焦時的外框 */
   }
+`;
+
+export const IconWrapper = styled.span<{ position: "start" | "end" }>`
+  display: flex;
+  margin-right: ${({ position }) => (position === "start" ? "8px" : "0")};
+  margin-left: ${({ position }) => (position === "end" ? "8px" : "0")};
 `;
